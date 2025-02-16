@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "b51cddc6-267f-4f97-8a5f-442d8d7c3d78",
+		"name": "food_rescue_apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14757867"
+	},
+	"item": [
+		{
+			"name": "http://localhost/food_delivery_rescue/get-canceled-orders",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"api_key\":\"0eab2209ea1509e29d0a1a04d615fcbaef38b5bd8a19a54d81bd35a2834e3f93\",\r\n    \"user_id\":2,\r\n    \"page\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/food_delivery_rescue/get-canceled-orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"food_delivery_rescue",
+						"get-canceled-orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/food_delivery_rescue/cancel-order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"api_key\":\"0eab2209ea1509e29d0a1a04d615fcbaef38b5bd8a19a54d81bd35a2834e3f93\",\r\n    \"order_id\":19,\r\n    \"discounted_price\":200.00,\r\n    \"reason\": \"User does not want order now.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/food_delivery_rescue/cancel-order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"food_delivery_rescue",
+						"cancel-order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/food_delivery_rescue/claim-order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"api_key\":\"0eab2209ea1509e29d0a1a04d615fcbaef38b5bd8a19a54d81bd35a2834e3f93\",\r\n    \"order_id\":19,\r\n    \"user_id\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/food_delivery_rescue/claim-order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"food_delivery_rescue",
+						"claim-order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

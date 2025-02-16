@@ -1,0 +1,7 @@
+[2025-02-16 06:54:36] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 06:54:36] [INFO] Cache miss: Fetching orders from DB for user 2
+[2025-02-16 06:54:37] [INFO] Fetching canceled orders for user 2
+[2025-02-16 06:54:37] [INFO] Cached orders for user 2, page 1
+[2025-02-16 06:54:37] [INFO] Returning canceled orders for user 2
+[2025-02-16 06:59:03] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 06:59:03] [INFO] Returning canceled orders for user 2

@@ -1,0 +1,43 @@
+[2025-02-16 07:00:55] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 07:00:56] [INFO] Cache miss: Fetching orders from DB for user 2
+[2025-02-16 07:00:56] [INFO] Fetching canceled orders for user 2
+[2025-02-16 07:00:56] [INFO] Cached orders for user 2, page 1
+[2025-02-16 07:00:56] [INFO] Returning canceled orders for user 2
+[2025-02-16 07:02:36] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 07:04:31] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 07:04:32] [INFO] Returning canceled orders for user 2
+[2025-02-16 07:28:53] [INFO] API called: cancel_order, order_id: 20, discounted_price: 190
+[2025-02-16 07:28:53] [INFO] Order updated successfully: order_id 20, status: canceled
+[2025-02-16 07:38:29] [INFO] API called: cancel_order, order_id: 9, discounted_price: 190
+[2025-02-16 07:38:29] [INFO] Order already canceled: order_id 9
+[2025-02-16 07:39:01] [INFO] API called: cancel_order, order_id: 9, discounted_price: 200
+[2025-02-16 07:39:01] [INFO] Order already canceled: order_id 9
+[2025-02-16 07:39:16] [INFO] API called: cancel_order, order_id: 19, discounted_price: 200
+[2025-02-16 07:39:16] [INFO] Order updated successfully: order_id 19, status: canceled
+[2025-02-16 07:40:23] [INFO] API called: get_canceled_orders, user_id: 0, page: 1
+[2025-02-16 07:42:08] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 07:42:09] [INFO] Cache miss: Fetching orders from DB for user 2
+[2025-02-16 07:42:09] [INFO] Fetching canceled orders for user 2
+[2025-02-16 07:42:10] [INFO] Cached orders for user 2, page 1
+[2025-02-16 07:42:10] [INFO] Returning canceled orders for user 2
+[2025-02-16 07:42:21] [INFO] API called: get_canceled_orders, user_id: 2, page: 2
+[2025-02-16 07:42:21] [INFO] Cache miss: Fetching orders from DB for user 2
+[2025-02-16 07:42:21] [INFO] Fetching canceled orders for user 2
+[2025-02-16 07:42:22] [INFO] Cached orders for user 2, page 2
+[2025-02-16 07:42:22] [INFO] Returning canceled orders for user 2
+[2025-02-16 07:44:18] [INFO] API called: claim_order, user_id: 2, order_id: 19
+[2025-02-16 07:44:18] [INFO] Order claimed successfully: user_id: 2, order_id: 19
+[2025-02-16 07:44:18] [INFO] Cache invalidated: canceled_orders:user_2:page_2
+[2025-02-16 07:44:19] [INFO] Cache invalidated: canceled_orders:user_2:page_1
+[2025-02-16 08:02:11] [INFO] API called: get_canceled_orders, user_id: 2, page: 2
+[2025-02-16 08:02:11] [INFO] Cache miss: Fetching orders from DB for user 2
+[2025-02-16 08:02:12] [INFO] Fetching canceled orders for user 2
+[2025-02-16 08:02:12] [INFO] Cached orders for user 2, page 2
+[2025-02-16 08:02:12] [INFO] Returning canceled orders for user 2
+[2025-02-16 08:02:55] [INFO] API called: get_canceled_orders, user_id: 2, page: 2
+[2025-02-16 08:02:55] [INFO] Returning canceled orders for user 2
+[2025-02-16 08:03:17] [INFO] API called: get_canceled_orders, user_id: 2, page: 1
+[2025-02-16 08:03:18] [INFO] Cache miss: Fetching orders from DB for user 2
+[2025-02-16 08:03:18] [INFO] Fetching canceled orders for user 2
+[2025-02-16 08:03:18] [INFO] Cached orders for user 2, page 1
+[2025-02-16 08:03:18] [INFO] Returning canceled orders for user 2
