@@ -1,7 +1,1 @@
-[2025-02-16 00:39:02] Unauthorized API access, api: get_canceled_orders, api_key: , GET: Array401
-[2025-02-16 00:41:32] Unauthorized API access, api: get_canceled_orders, api_key: , GET: Array, 401
-[2025-02-16 00:41:42] 404 Not Found, url:get-cancelled-orders
-[2025-02-16 06:46:22] 404 Not Found, url:my_local/food_delivery_rescue/get-canceled-orders
-[2025-02-16 07:02:36] Unauthorized access: API get_canceled_orders, api_key: 
-[2025-02-16 07:40:23] Unauthorized access: API get_canceled_orders, api_key: 
-[2025-02-16 07:43:39] Invalid input: order_id: 19, discounted_price: 0, reason: 0
+[2025-02-16 18:45:11] Unauthorized access: API cancel_order, WARNING

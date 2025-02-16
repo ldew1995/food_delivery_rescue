@@ -36,28 +36,32 @@ Ensure you have PHP 7.4+ and MySQL 5.7+ installed.
 │   ├── db.php
 │   ├── function.php
 │   ├── redis.php
+│   ├── jwt_function.php
 ├── 📁 routes             # API Endpoints
 │   ├── cancel_order.php
 │   ├── get_cancelled_orders.php
 │   ├── claim_order.php
+│   ├── oauth_token.php
+│   ├── register.php
 ├── 📁 sql             # Database Schema & Dummy Data
 │   ├── food_delivery_rescue.sql
 ├── 📁 storage             # to store logs and uploaded files
 │   ├── logs
-├── 📁 vendor          # Configurations
+├── 📁 vendor          # all dependency liberary files
 │   ├── MysqliDB
 │   ├── predis
 ├── 📁 public          # Second entry point
 │   ├── index.php
 ├── .htaccess          # First app route entry point
+├── .composer.json     # dependecy manager file
 ├── README.md          # Project Documentation
 
 3. CREATE DATABASE food_rescue_db;
 USE food_rescue_db;
 
-4. API Authentication     // note: given schema has already provided seed data and generated api_key
-Generate an API key and insert it into the api_keys table.
-Include the api_key in every request.   
+4. JWT Authentication     // note: given schema has already provided seed data and generated user 
+Register new user and login to generate bearer token.
+Include the jwt token in every request.   
 
 5. Please make sure Use cloud redis - https://cloud.redis.io/, provide credentials to continue
 

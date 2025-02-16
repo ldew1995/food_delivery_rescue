@@ -18,14 +18,6 @@ function writeLog($message, $type = "INFO") {
     file_put_contents($file, $logMessage, FILE_APPEND);
 }
 
-// Secure API key authentication
-function authenticate_request($db, $api_key) {
-    $query = "SELECT id FROM api_keys WHERE api_key = ? AND status = 'active' AND (expires_at IS NULL OR expires_at > NOW())";
-    $result = $db->rawQueryOne($query, [$api_key]);
-
-    return !empty($result);
-}
-
 // Rate limiting using Redis
 function rate_limit($redis) {
     $ip = $_SERVER['REMOTE_ADDR'];
@@ -36,4 +28,19 @@ function rate_limit($redis) {
         http_response_code(429);
         exit(json_encode(["error" => "Too many requests. Try again later."]));
     }
+}
+
+// Get min-max latitude and min-max longitude within 3 km
+function getBoundingBox($lat, $lng, $distance = 3) {
+    $earthRadius = 111; // Approximate km per degree
+
+    $latOffset = $distance / $earthRadius;
+    $lngOffset = $distance / ($earthRadius * cos(deg2rad($lat)));
+
+    return [
+        'minLat' => $lat - $latOffset,
+        'maxLat' => $lat + $latOffset,
+        'minLng' => $lng - $lngOffset,
+        'maxLng' => $lng + $lngOffset
+    ];
 }

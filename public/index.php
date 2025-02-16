@@ -3,6 +3,7 @@ require_once '../config/config.php';
 require_once '../includes/db.php';
 require_once '../includes/redis.php';
 require_once '../includes/function.php';
+require_once '../includes/jwt_functions.php';
 
 rate_limit($redis);  // Prevent abuse
 
@@ -21,6 +22,12 @@ if (strpos($request, $basePath) === 0) {
 $request = ltrim($request, '/');
 
 switch ($request) {
+    case 'register' :
+        require '../routes/register.php';
+        break;
+    case 'oauth-token' :
+        require '../routes/oauth_token.php';
+        break;
     case 'cancel-order' :
         require '../routes/cancel_order.php';
         break;
