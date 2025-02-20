@@ -148,7 +148,7 @@ try {
             'message' => 'Cancel order list not found.', 
             'data' => $canceled_orders
         ];
-        $status_code = 400;
+        $status_code = 404;
     }
 
     // Step 8: Return JSON Response

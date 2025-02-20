@@ -66,7 +66,7 @@ try {
 
     // Success Response
     writeLog("Order updated successfully: order_id $order_id, status: canceled", "INFO");
-    jsonEncodeResponse(response_array: ['success'=>true,'message'=> "Order marked as canceled."], status_code: 201);
+    jsonEncodeResponse(['success'=>true,'message'=> "Order marked as canceled."], status_code: 200);
 
 
 } catch (Exception $e) {

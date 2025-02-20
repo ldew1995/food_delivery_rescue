@@ -30,7 +30,7 @@ try {
 
     if (!$order) {
         logError("Order not available, order_id: $order_id");
-        throw new Exception("Order not available");
+        jsonEncodeResponse(['success'=>false,'message'=> "Order not available."], 400);
     }
 
     // Secure Update Query Using Bind Parameters
@@ -40,7 +40,7 @@ try {
 
     if (!$update) {
         logError("Order update failed.");
-        jsonEncodeResponse(['success'=>false,'message'=> "Order update failed."], 500);
+        jsonEncodeResponse(['success'=>false,'message'=> "Order update failed."], 400);
     }
 
     // Insert new order as a claimed order
@@ -58,7 +58,7 @@ try {
     $new_order_id = $db->insert('orders', $arr_ins);
     if (!$new_order_id) {
         logError("Order insertion failed.");
-        jsonEncodeResponse(['success'=>false,'message'=> "Order insertion failed."], 500);
+        jsonEncodeResponse(['success'=>false,'message'=> "Order insertion failed."], 400);
     }
 
     // Fetch user preference
@@ -74,7 +74,7 @@ try {
     $order_items = $db->get('order_items', null, ['item_name', 'category']);
     if (!$order_items) {
         logError("Order items does not exist.");
-        jsonEncodeResponse(['success'=>false,'message'=> "Order items does not exist."], 400);
+        jsonEncodeResponse(['success'=>false,'message'=> "Order items does not exist."], 404);
     }
     foreach ($order_items as $item) {
         $item_ins = [
@@ -84,7 +84,7 @@ try {
         ];
         if (!$db->insert('order_items', $item_ins)) {
             logError("Order item insertion failed.");
-            jsonEncodeResponse(['success'=>false,'message'=> "Order item insertion failed."], 500);
+            jsonEncodeResponse(['success'=>false,'message'=> "Order item insertion failed."], 400);
         }
     }
 
@@ -99,7 +99,7 @@ try {
         ];
         if (!$db->insert('order_delivery', $partner_ins)) {
             logError("Order Delivery insertion failed.");
-            jsonEncodeResponse(['success'=>false,'message'=> "Order Delivery insertion failed."], 500);
+            jsonEncodeResponse(['success'=>false,'message'=> "Order Delivery insertion failed."], 400);
         }
     }
 
