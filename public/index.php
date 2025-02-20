@@ -1,9 +1,9 @@
 <?php
 require_once '../config/config.php';
 require_once '../includes/db.php';
-require_once '../includes/redis.php';
-require_once '../includes/function.php';
-require_once '../includes/jwt_functions.php';
+require_once '../helpers/redis_helper.php';
+require_once '../helpers/common_helper.php';
+require_once '../helpers/jwt_helper.php';
 
 rate_limit($redis);  // Prevent abuse
 

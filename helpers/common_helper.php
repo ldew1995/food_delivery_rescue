@@ -44,3 +44,17 @@ function getBoundingBox($lat, $lng, $distance = 3) {
         'maxLng' => $lng + $lngOffset
     ];
 }
+
+//success error response
+function jsonEncodeResponse($response_array, $status_code){
+    $response = [
+        "success" => $response_array['success'], 
+        "message" => $response_array['message'], 
+    ];
+
+    if(!empty($response_array['data'])) {
+        $response['data'] = $response_array['data'];
+    }
+    echo json_encode($response, $status_code);
+    die();
+}

@@ -12,13 +12,14 @@ try {
     if (!empty($password)) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     } else {
-        throw new Exception("Invalid input: Password cannot be empty");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid input: Password cannot be empty."], 400);
+
     }
 
     // Validate Input
     if (empty($name) || empty($email) || empty($hashedPassword)) {
         logError("Invalid input: name: $name, email: $email", "ERROR");
-        throw new Exception("Invalid input parameters");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid input parameters."], 400);
     }
 
     // Verify existing user
@@ -26,7 +27,7 @@ try {
     $user = $db->getOne('users', ['id', 'email']);
     if ($user) {
         logError("User already exists: email $email", "ERROR");
-        throw new Exception("User already exists.");
+        jsonEncodeResponse(['success'=>false,'message'=> "User already exists."], 400);
     }
 
     // Start Transaction
@@ -38,9 +39,9 @@ try {
     if ($resp) {
         // Commit transaction
         $db->commit();
-        echo json_encode(['success' => true, 'message' => 'User registered successfully']);
+        jsonEncodeResponse(['success'=>true,'message'=> "User registered successfully."], 200);
     } else {
-        throw new Exception("User registration failed");
+        jsonEncodeResponse(['success'=>false,'message'=> "User registration failed."], 400);
     }
 
 } catch (Exception $e) {
@@ -49,5 +50,5 @@ try {
 
     // Log Error and Return JSON Response
     logError("Error: " . $e->getMessage(), "ERROR");
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    jsonEncodeResponse(["success" => false, "message" => $e->getMessage()] , 500);
 }

@@ -32,11 +32,12 @@ Ensure you have PHP 7.4+ and MySQL 5.7+ installed.
 │   ├── docs
 ├── 📁 config          # Configurations
 │   ├── config.php
-├── 📁 includes          # connections and predefined function
+├── 📁 includes          # connections
 │   ├── db.php
-│   ├── function.php
-│   ├── redis.php
-│   ├── jwt_function.php
+── 📁 helpers          # predefined function
+│   ├── common_helper.php
+│   ├── redis_helper.php
+│   ├── jwt_helper.php
 ├── 📁 routes             # API Endpoints
 │   ├── cancel_order.php
 │   ├── get_cancelled_orders.php

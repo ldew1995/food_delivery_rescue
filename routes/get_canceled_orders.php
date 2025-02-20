@@ -13,18 +13,18 @@ try {
     // Step 1: Check Authentication
     if (!verifyAuth($config)) {
         logError("Unauthorized access: API get_canceled_orders", "WARNING");
-        throw new Exception("Unauthorized API access");
+        jsonEncodeResponse(['success'=>false,'message'=> "Unauthorized API access."], 401);
     }
 
     // Step 2: Validate Input
     if (empty($user_id)) {
         logError("Invalid input: user_id: $user_id", "ERROR");
-        throw new Exception("Invalid input parameters");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid input parameters."], 400);
     }
 
     // Step 3: Check Redis Cache First
     $cache_key = "canceled_orders:user_$user_id:page_$page";
-    $canceled_orders = $redis->get($cache_key);
+    $canceled_orders = json_decode($redis->get($cache_key), true);
 
     if (empty($canceled_orders)) {
         writeLog("Cache miss: Fetching orders from DB for user $user_id", "INFO");
@@ -71,12 +71,9 @@ try {
 
         $query = "
             SELECT o.id AS order_id, o.original_price, o.discounted_price, 
-                o.latitude AS order_lat, o.longitude AS order_lng, r.name AS restaurant_name, 
-                dp.id AS partner_id, dp.name as partner_name
+                o.latitude AS order_lat, o.longitude AS order_lng, r.name AS restaurant_name
             FROM orders o
             INNER JOIN restaurants r ON o.restaurant_id = r.id
-            INNER JOIN order_delivery od ON od.order_id = o.id
-            INNER JOIN delivery_partners dp ON dp.id = od.delivery_partner_id
             WHERE o.status = 'canceled'
             AND o.latitude BETWEEN ? AND ?
             AND o.longitude BETWEEN ? AND ?";
@@ -117,17 +114,17 @@ try {
         $total_orders = $db->getValue("orders o", "count(*)");
         $total_pages = ceil($total_orders / $limit);
 
-        $response = json_encode([
+        $response = [
             "orders" => $orders, 
             "pagination" => [
                 "current_page" => $page, 
                 "total_pages" => $total_pages, 
                 "total_orders" => $total_orders
             ]
-        ]);
+        ];
 
         // Store in Redis for Caching (5 Min Expiry)
-        $redis->setex($cache_key, 300, $response);
+        $redis->setex($cache_key, 300, json_encode($response));
         writeLog("Cached orders for user $user_id, page $page", "INFO");
 
         // Commit Transaction
@@ -136,9 +133,27 @@ try {
         $canceled_orders = $response;
     }
 
+    if(!empty($canceled_orders)) { 
+        $response_array = [
+            'success' => true, 
+            'message' => 'Cancel order list found.', 
+            'data' => $canceled_orders
+        ];
+        $status_code = 200;
+
+    } else {
+
+        $response_array = [
+            'success' => false, 
+            'message' => 'Cancel order list not found.', 
+            'data' => $canceled_orders
+        ];
+        $status_code = 400;
+    }
+
     // Step 8: Return JSON Response
     writeLog("Returning canceled orders for user $user_id", "INFO");
-    echo $canceled_orders;
+    jsonEncodeResponse($response_array, $status_code);
 
 } catch (Exception $e) {
     // Rollback Transaction on Error
@@ -146,5 +161,5 @@ try {
 
     // Log Error and Return JSON Response
     logError("Error: " . $e->getMessage(), "ERROR");
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    jsonEncodeResponse(["success" => false, "message" => $e->getMessage()] , 500);
 }

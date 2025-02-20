@@ -10,13 +10,13 @@ try {
     // Authentication Check
     if (!verifyAuth($config)) {
         logError("Unauthorized access: API cancel_order", "WARNING");
-        throw new Exception("Unauthorized API access");
+        jsonEncodeResponse(['success'=>false,'message'=> "Unauthorized API access."], 401);
     }
 
     // Validate Input
     if (empty($order_id) || empty($discounted_price)) {
         logError("Invalid input: order_id: $order_id, discounted_price: $discounted_price, reason: $reason", "ERROR");
-        throw new Exception("Invalid input parameters");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid input parameters."], 400);
     }
 
     writeLog("API called: cancel_order, order_id: $order_id, discounted_price: $discounted_price", "INFO");
@@ -27,12 +27,13 @@ try {
 
     if (!$order) {
         logError("Order not found: order_id $order_id", "ERROR");
-        throw new Exception("Order not found");
+        jsonEncodeResponse(['success'=>false,'message'=> "Order not found."], 400);
+
     }
 
     if ($order['status'] === 'canceled') {
         writeLog("Order already canceled: order_id $order_id", "INFO");
-        throw new Exception("Order is already canceled");
+        jsonEncodeResponse(['success'=>false,'message'=> "Order is already canceled."], 400);
     }
 
     // Start Database Transaction
@@ -47,12 +48,12 @@ try {
     ]);
 
     if (!$update) {
-        throw new Exception("Failed to update order status");
+        jsonEncodeResponse(['success'=>false,'message'=> "Failed to update order status."], status_code: 422);
     }
 
     // Clear Cache (If Exists)
     $user_id = $order['user_id'];
-    $cache_pattern = "canceled_orders:user_$user_id*";
+    $cache_pattern = "canceled_orders:*";
     $keys = $redis->keys($cache_pattern);
 
     foreach ($keys as $key) {
@@ -65,7 +66,8 @@ try {
 
     // Success Response
     writeLog("Order updated successfully: order_id $order_id, status: canceled", "INFO");
-    echo json_encode(["success" => true, "message" => "Order marked as canceled"]);
+    jsonEncodeResponse(response_array: ['success'=>true,'message'=> "Order marked as canceled."], status_code: 201);
+
 
 } catch (Exception $e) {
     // Rollback Transaction in Case of Failure
@@ -73,5 +75,5 @@ try {
 
     // Log Error and Return JSON Response
     logError("Error: " . $e->getMessage(), "ERROR");
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    jsonEncodeResponse(["success" => false, "message" => $e->getMessage()] , 500);
 }

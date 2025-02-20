@@ -9,7 +9,7 @@ try {
     // Validate Input
     if (empty($email) || empty($password)) {
         logError("Invalid input: email: $email", "ERROR");
-        throw new Exception("Invalid input parameters");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid input parameters."], 400);
     }
 
     // Verify user credentials
@@ -17,11 +17,11 @@ try {
     $user = $db->getOne('users', ['id', 'password']);
 
     if (!$user) {
-        throw new Exception("Invalid credentials");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid credentials."], 400);
     }
 
     if (!password_verify($password, $user['password'])) {
-        throw new Exception("Invalid credentials");
+        jsonEncodeResponse(['success'=>false,'message'=> "Invalid credentials."], 400);
     }
 
     // Generate Tokens
@@ -29,10 +29,10 @@ try {
     $refreshToken = generateRefreshToken($user['id'], $db, $config);
 
     // Return JSON Response
-    echo json_encode(['success' => true, 'token' => $token, 'refresh_token' => $refreshToken]);
+    jsonEncodeResponse(['success'=>true,'message'=> "User logged in successfully.", 'data' => ['token' => $token, 'refresh_token' => $refreshToken]], 200);
 
 } catch (Exception $e) {
     // Log Error and Return JSON Response
     logError("Login Error: " . $e->getMessage(), "ERROR");
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    jsonEncodeResponse(["success" => false, "message" => $e->getMessage()] , 500);
 }
